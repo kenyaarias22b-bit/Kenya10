@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Básica</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+        
+        .calculadora {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-borrar {
+            grid-column: span 4; /* Ocupa todo el ancho */
+            background-color: #dc3545;
+            font-size: 16px;
+        }
+
+        .btn-borrar:hover {
+            background-color: #c82333;
+        }
+
+        .resultado-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculadora">
+        <h2>Calculadora</h2>
+        
+        <input type="number" id="num1" placeholder="Ingresa el primer número">
+        <input type="number" id="num2" placeholder="Ingresa el segundo número">
+
+        <div class="botones">
+            <button onclick="calcular('+')">+</button>
+            <button onclick="calcular('-')">-</button>
+            <button onclick="calcular('*')">×</button>
+            <button onclick="calcular('/')">÷</button>
+            
+            <button onclick="borrar()" class="btn-borrar">Borrar / Limpiar</button>
+        </div>
+
+        <div class="resultado-container">
+            Resultado: <span id="resultado">0</span>
+        </div>
+    </div>
+
+    <script>
+        // Función principal para hacer los cálculos
+        function calcular(operacion) {
+            // Obtener los valores de los inputs
+            let num1 = parseFloat(document.getElementById('num1').value);
+            let num2 = parseFloat(document.getElementById('num2').value);
+            let spanResultado = document.getElementById('resultado');
+
+            // Validar que el usuario haya escrito números
+            if (isNaN(num1) || isNaN(num2)) {
+                spanResultado.innerText = "Error: Faltan números";
+                return;
+            }
+
+            let resultadoFinal;
+
+            // Ejecutar la operación correspondiente
+            switch (operacion) {
+                case '+':
+                    resultadoFinal = num1 + num2;
+                    break;
+                case '-':
+                    resultadoFinal = num1 - num2;
+                    break;
+                case '*':
+                    resultadoFinal = num1 * num2;
+                    break;
+                case '/':
+                    // Evitar división por cero
+                    if (num2 === 0) {
+                        spanResultado.innerText = "No se puede dividir por 0";
+                        return;
+                    }
+                    resultadoFinal = num1 / num2;
+                    break;
+            }
+
+            // Mostrar el resultado en pantalla
+            spanResultado.innerText = resultadoFinal;
+        }
+
+        // Función para limpiar los campos
+        function borrar() {
+            document.getElementById('num1').value = '';
+            document.getElementById('num2').value = '';
+            document.getElementById('resultado').innerText = '0';
+        }
+    </script>
+
+</body>
+</html>
